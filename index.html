@@ -43,11 +43,6 @@
   .brand{display:flex;align-items:baseline;gap:10px;}
   .brand-name{font-family:'Noto Serif KR',serif;font-weight:800;font-size:20px;color:var(--ink);letter-spacing:0.02em;}
   .brand-by{font-size:11px;font-weight:700;letter-spacing:0.12em;color:var(--gold-deep);}
-  .nav-cta{
-    background:var(--ink);color:#fff;font-weight:700;font-size:13.5px;
-    padding:10px 22px;border-radius:999px;transition:all .2s ease;
-  }
-  .nav-cta:hover{background:var(--ink-2);transform:translateY(-1px);}
 
   /* ---------- HERO ---------- */
   .hero{
@@ -398,6 +393,7 @@
     display:inline-block;background:#fff;color:var(--ink);
     font-weight:800;font-size:16px;padding:18px 44px;border-radius:999px;
     transition:all .2s ease;box-shadow:0 12px 32px rgba(0,0,0,0.25);
+    text-decoration:none;
   }
   .final-btn:hover{background:var(--cream);transform:translateY(-2px);}
   .final-sub{margin-top:16px;font-size:12.5px;color:rgba(255,255,255,0.5);}
@@ -411,6 +407,47 @@
   .footer b{color:#fff;font-family:'Noto Serif KR',serif;font-size:15px;}
   .footer .gold{color:var(--gold-light);font-weight:700;}
 
+  /* ---------- MODAL (Lock-in Strategy) ---------- */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(22, 35, 63, 0.6);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .modal-overlay.active { display: flex; opacity: 1; }
+  .modal-content {
+    background: var(--panel); width: 90%; max-width: 420px;
+    border-radius: 20px; padding: 40px 32px; text-align: center;
+    position: relative; transform: translateY(20px);
+    transition: transform 0.3s ease; box-shadow: 0 24px 48px rgba(0,0,0,0.15);
+  }
+  .modal-overlay.active .modal-content { transform: translateY(0); }
+  .modal-close {
+    position: absolute; top: 16px; right: 20px; font-size: 24px;
+    color: var(--slate-2); cursor: pointer; background: none; border: none;
+  }
+  .modal-icon {
+    width: 56px; height: 56px; background: rgba(181,137,74,0.1);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+  }
+  .modal-icon svg { width: 28px; height: 28px; stroke: var(--gold-deep); }
+  .modal-title {
+    font-family: 'Noto Serif KR', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin-bottom: 12px;
+  }
+  .modal-desc { font-size: 14.5px; color: var(--slate-2); line-height: 1.6; margin-bottom: 32px; }
+  .modal-btn {
+    display: block; width: 100%; background: var(--ink); color: #fff;
+    padding: 16px; border-radius: 12px; font-weight: 600; font-size: 15px;
+    transition: background 0.2s; text-decoration:none;
+  }
+  .modal-btn:hover { background: var(--ink-2); }
 </style>
 </head>
 <body>
@@ -421,7 +458,7 @@
     <span class="brand-name">GRIFFIN</span>
     <span class="brand-by">by FASTFIVE</span>
   </div>
-  <a href="#signup-form" class="nav-cta">무료 진단 신청</a>
+  <!-- 무료 진단 신청 버튼 삭제됨 -->
 </nav>
 
 <!-- HERO -->
@@ -435,11 +472,10 @@
       내 건물의 상태를 진단하고, 해결 방법까지 제안해 드립니다.
     </p>
     <div class="lead-box">
-      <!-- '멤버십 가입'으로 워딩 수정 -->
-      <a href="#signup-form" class="lead-btn primary">10초 만에 멤버십 가입하기</a>
-      <a href="https://griffin.fastfive.co.kr/" class="lead-btn ghost">이미 회원이라면 로그인 →</a>
+      <!-- 링크 변경됨 -->
+      <a href="https://griffin.fastfive.co.kr/register" target="_blank" class="lead-btn primary">10초 만에 멤버십 가입하기</a>
+      <a href="https://griffin.fastfive.co.kr/" target="_blank" class="lead-btn ghost">이미 회원이라면 로그인 →</a>
     </div>
-    <!-- 캡션 유지 -->
     <p class="lead-caption">이름과 연락처만으로 <b>간편하게 가입</b>하고, 상세 건물 데이터 입력 후 무료 헬스체크 리포트를 받아보세요.</p>
     
     <div class="trust-strip">
@@ -607,32 +643,29 @@
     <h2 class="sec-title">진단에서 끝나지 않습니다.<br><em>핵심 실무 부서</em>가 직접 실행합니다</h2>
     <p class="sec-sub">상담 결과에 따라 건물의 상황에 가장 알맞은 전문 부서(3-Track)가 배정되어 실질적인 해결책을 제시합니다.</p>
     <div class="svc-grid" style="text-align:left;">
-      <!-- Track 1 (GRIFFIN 최우선 배치) -->
       <div class="svc-card">
         <div class="svc-num">TRACK 01</div>
         <h3>공실/시스템 문의 (GRIFFIN)</h3>
         <p>공실 장기화 고민 해결을 돕고, 관리 시스템(그리핀) 도입 및 온보딩 등 일반적인 건물 관리를 최우선으로 지원합니다.</p>
-        <a class="svc-link" href="https://griffin.fastfive.co.kr/">GRIFFIN 살펴보기 →</a>
+        <a class="svc-link" href="https://griffin.fastfive.co.kr/" target="_blank">GRIFFIN 살펴보기 →</a>
       </div>
-      <!-- Track 2 (VC) -->
       <div class="svc-card">
         <div class="svc-num">TRACK 02</div>
         <h3>개발 문의 (VC 파트)</h3>
         <p>신축, 리모델링, 밸류애드 등 건물의 내재 가치를 끌어올리기 위한 전문적인 기획 및 개발 상담을 제공합니다.</p>
-        <a class="svc-link" href="https://buildingsolution.co.kr/contact">개발 상담 →</a>
+        <a class="svc-link" href="https://buildingsolution.co.kr/contact" target="_blank">개발 상담 →</a>
       </div>
-      <!-- Track 3 (PM) -->
       <div class="svc-card">
         <div class="svc-num">TRACK 03</div>
         <h3>PM / FM 문의 (PM 파트)</h3>
         <p>임대차 관리부터 건물 자산 관리, 시설 유지보수까지 건물 운영 전반을 체계적이고 투명하게 대행합니다.</p>
-        <a class="svc-link" href="https://buildingsolution.co.kr/contact">운영 상담 →</a>
+        <a class="svc-link" href="https://buildingsolution.co.kr/contact" target="_blank">운영 상담 →</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- GRIFFIN 솔루션 (가장 먼저 노출) -->
+<!-- GRIFFIN 솔루션 -->
 <section id="section-vacancy" class="bs-section">
   <div class="bs-inner">
     <div class="bs-left">
@@ -643,17 +676,17 @@
         <div class="bs-counter"><span id="counter-vacancy">1</span> / 6</div>
         <button class="bs-nav-btn active" onclick="moveSlider('vacancy', 1)">&#8594;</button>
       </div>
-      <a href="https://griffin.fastfive.co.kr/" class="bs-consult-btn">GRIFFIN 도입 문의</a>
+      <a href="https://griffin.fastfive.co.kr/" target="_blank" class="bs-consult-btn">GRIFFIN 도입 문의</a>
     </div>
     <div class="bs-right">
       <div class="bs-track-container" id="track-vacancy" onscroll="updateCounter('vacancy')">
         <div class="bs-track">
-          <div class="bs-card"><img src="공실관리1.png" alt="공실관리 1"></div>
-          <div class="bs-card"><img src="공실관리2.png" alt="공실관리 2"></div>
-          <div class="bs-card"><img src="공실관리3.png" alt="공실관리 3"></div>
-          <div class="bs-card"><img src="공실관리1.png" alt="공실관리 4"></div>
-          <div class="bs-card"><img src="공실관리2.png" alt="공실관리 5"></div>
-          <div class="bs-card"><img src="공실관리3.png" alt="공실관리 6"></div>
+          <div class="bs-card"><img src="images/공실관리1.png" alt="공실관리 1" onerror="this.src='공실관리1.png'"></div>
+          <div class="bs-card"><img src="images/공실관리2.png" alt="공실관리 2" onerror="this.src='공실관리2.png'"></div>
+          <div class="bs-card"><img src="images/공실관리3.png" alt="공실관리 3" onerror="this.src='공실관리3.png'"></div>
+          <div class="bs-card"><img src="images/공실관리1.png" alt="공실관리 4" onerror="this.src='공실관리1.png'"></div>
+          <div class="bs-card"><img src="images/공실관리2.png" alt="공실관리 5" onerror="this.src='공실관리2.png'"></div>
+          <div class="bs-card"><img src="images/공실관리3.png" alt="공실관리 6" onerror="this.src='공실관리3.png'"></div>
         </div>
       </div>
     </div>
@@ -671,17 +704,17 @@
         <div class="bs-counter"><span id="counter-dev">1</span> / 6</div>
         <button class="bs-nav-btn active" onclick="moveSlider('dev', 1)">&#8594;</button>
       </div>
-      <a href="https://buildingsolution.co.kr/contact" class="bs-consult-btn">무료 상담</a>
+      <a href="https://buildingsolution.co.kr/contact" target="_blank" class="bs-consult-btn">무료 상담</a>
     </div>
     <div class="bs-right">
       <div class="bs-track-container" id="track-dev" onscroll="updateCounter('dev')">
         <div class="bs-track">
-          <div class="bs-card"><img src="신축개발1.png" alt="신축개발 1"></div>
-          <div class="bs-card"><img src="신축개발2.png" alt="신축개발 2"></div>
-          <div class="bs-card"><img src="신축개발3.png" alt="신축개발 3"></div>
-          <div class="bs-card"><img src="신축개발1.png" alt="신축개발 4"></div>
-          <div class="bs-card"><img src="신축개발2.png" alt="신축개발 5"></div>
-          <div class="bs-card"><img src="신축개발3.png" alt="신축개발 6"></div>
+          <div class="bs-card"><img src="images/신축개발1.png" alt="신축개발 1" onerror="this.src='신축개발1.png'"></div>
+          <div class="bs-card"><img src="images/신축개발2.png" alt="신축개발 2" onerror="this.src='신축개발2.png'"></div>
+          <div class="bs-card"><img src="images/신축개발3.png" alt="신축개발 3" onerror="this.src='신축개발3.png'"></div>
+          <div class="bs-card"><img src="images/신축개발1.png" alt="신축개발 4" onerror="this.src='신축개발1.png'"></div>
+          <div class="bs-card"><img src="images/신축개발2.png" alt="신축개발 5" onerror="this.src='신축개발2.png'"></div>
+          <div class="bs-card"><img src="images/신축개발3.png" alt="신축개발 6" onerror="this.src='신축개발3.png'"></div>
         </div>
       </div>
     </div>
@@ -699,17 +732,17 @@
         <div class="bs-counter"><span id="counter-asset">1</span> / 6</div>
         <button class="bs-nav-btn active" onclick="moveSlider('asset', 1)">&#8594;</button>
       </div>
-      <a href="https://buildingsolution.co.kr/contact" class="bs-consult-btn">무료 상담</a>
+      <a href="https://buildingsolution.co.kr/contact" target="_blank" class="bs-consult-btn">무료 상담</a>
     </div>
     <div class="bs-right">
       <div class="bs-track-container" id="track-asset" onscroll="updateCounter('asset')">
         <div class="bs-track">
-          <div class="bs-card"><img src="자산관리1.png" alt="자산관리 1"></div>
-          <div class="bs-card"><img src="자산관리2.png" alt="자산관리 2"></div>
-          <div class="bs-card"><img src="자산관리3.png" alt="자산관리 3"></div>
-          <div class="bs-card"><img src="자산관리1.png" alt="자산관리 4"></div>
-          <div class="bs-card"><img src="자산관리2.png" alt="자산관리 5"></div>
-          <div class="bs-card"><img src="자산관리3.png" alt="자산관리 6"></div>
+          <div class="bs-card"><img src="images/자산관리1.png" alt="자산관리 1" onerror="this.src='자산관리1.png'"></div>
+          <div class="bs-card"><img src="images/자산관리2.png" alt="자산관리 2" onerror="this.src='자산관리2.png'"></div>
+          <div class="bs-card"><img src="images/자산관리3.png" alt="자산관리 3" onerror="this.src='자산관리3.png'"></div>
+          <div class="bs-card"><img src="images/자산관리1.png" alt="자산관리 4" onerror="this.src='자산관리1.png'"></div>
+          <div class="bs-card"><img src="images/자산관리2.png" alt="자산관리 5" onerror="this.src='자산관리2.png'"></div>
+          <div class="bs-card"><img src="images/자산관리3.png" alt="자산관리 6" onerror="this.src='자산관리3.png'"></div>
         </div>
       </div>
     </div>
@@ -721,9 +754,8 @@
   <div class="sec-inner">
     <h2>내 건물의 건강 상태,<br><em>오늘 무료로</em> 확인해 보세요</h2>
     <p>진단은 무료이며, 모든 결과는 실무 전문가의 검토를 거쳐 정해진 기한 안에 전달됩니다.<br>FASTFIVE의 10년 운영 노하우가 건물주님의 편에 섭니다.</p>
-    <!-- '멤버십 가입'으로 워딩 수정 -->
-    <a href="#signup-form" class="final-btn">10초 만에 멤버십 가입하고 무료 진단받기</a>
-    <!-- 서브 카피 유지 -->
+    <!-- 링크 변경됨 -->
+    <a href="https://griffin.fastfive.co.kr/register" target="_blank" class="final-btn">10초 만에 멤버십 가입하고 무료 진단받기</a>
     <p class="final-sub">복잡한 절차 없이 이름과 연락처만으로 시작하세요 · 상세 진단 혜택은 가입 후 제공됩니다</p>
   </div>
 </section>
@@ -741,6 +773,8 @@
     </div>
   </div>
 </footer>
+
+<!-- 모달은 링크 이동으로 변경되어 제거됨 -->
 
 <script>
   // ========== 슬라이더 기능 ==========
