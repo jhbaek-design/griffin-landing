@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GRIFFIN PMS by FASTFIVE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root{
+    --ink:#16233F;
+    --ink-2:#2A3958;
+    --gold:#B5894A;
+    --gold-deep:#8F6B36;
+    --gold-tint:rgba(181,137,74,0.10);
+    --gold-light:#D9B87C;   /* 다크 배경 위 골드 */
+    --cream:#F7F5F0;
+    --panel:#FFFFFF;
+    --slate:#2A2E35;
+    --slate-2:#6B7280;
+    --line:#E6E2D8;
+    --bs-green:#276b4a;
+    --bs-dark:#3b4046;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
+    background:var(--cream); color:var(--slate); -webkit-font-smoothing:antialiased;
+  }
+  a{text-decoration:none;color:inherit;}
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:sticky;top:0;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px clamp(20px,5vw,64px);
+    background:rgba(255,255,255,0.92); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex;align-items:baseline;gap:10px;}
+  .brand-name{font-family:'Noto Serif KR',serif;font-weight:800;font-size:20px;color:var(--ink);letter-spacing:0.02em;}
+  .brand-by{font-size:11px;font-weight:700;letter-spacing:0.12em;color:var(--gold-deep);}
+  .nav-cta{
+    background:var(--ink);color:#fff;font-weight:700;font-size:13.5px;
+    padding:10px 22px;border-radius:999px;transition:all .2s ease;
+  }
+  .nav-cta:hover{background:var(--ink-2);transform:translateY(-1px);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:
+      radial-gradient(1200px 500px at 85% -10%, rgba(181,137,74,0.08), transparent 60%),
+      linear-gradient(180deg,#FBFAF7 0%, var(--cream) 100%);
+    padding:clamp(64px,9vw,110px) clamp(20px,5vw,64px) clamp(56px,7vw,80px);
+    text-align:center;
+  }
+  .hero-inner{max-width:860px;margin:0 auto;}
+  .hero-badge{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--panel);border:1px solid var(--line);border-radius:999px;
+    padding:8px 18px;font-size:12.5px;font-weight:700;color:var(--ink);
+    box-shadow:0 2px 8px rgba(22,35,63,0.05);margin-bottom:26px;
+  }
+  .hero-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);}
+  h1.headline{
+    font-family:'Noto Serif KR',serif;font-weight:800;
+    font-size:clamp(30px,4.4vw,52px);line-height:1.35;color:var(--ink);
+    letter-spacing:-0.01em;margin-bottom:22px;
+  }
+  h1.headline em{font-style:normal;color:var(--gold-deep);}
+  .hero-desc{
+    font-size:clamp(15px,1.9vw,17.5px);line-height:1.85;color:var(--slate-2);
+    max-width:640px;margin:0 auto 40px;
+  }
+  .hero-desc b{color:var(--slate);font-weight:700;}
+
+  /* CTA 버튼 */
+  .lead-box{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:0 auto 18px;}
+  .lead-btn{
+    display:inline-flex;align-items:center;height:56px;padding:0 32px;
+    border-radius:999px;font-weight:700;font-size:15px;white-space:nowrap;
+    transition:all .2s ease;
+  }
+  .lead-btn.primary{background:var(--ink);color:#fff;}
+  .lead-btn.primary:hover{background:var(--ink-2);transform:translateY(-2px);}
+  .lead-btn.ghost{
+    background:transparent;color:var(--ink);border:1.5px solid var(--line);
+  }
+  .lead-btn.ghost:hover{border-color:var(--gold-deep);color:var(--gold-deep);}
+  .lead-caption{font-size:12.5px;color:var(--slate-2);margin-bottom:44px;}
+  .lead-caption b{color:var(--gold-deep);font-weight:700;}
+
+  /* 신뢰 지표 */
+  .trust-strip{
+    display:flex;justify-content:center;gap:clamp(24px,5vw,64px);
+    flex-wrap:wrap;border-top:1px solid var(--line);padding-top:34px;
+    max-width:760px;margin:0 auto;
+  }
+  .trust-item{text-align:center;}
+  .trust-num{font-family:'Noto Serif KR',serif;font-weight:800;font-size:clamp(22px,3vw,30px);color:var(--ink);}
+  .trust-num em{font-style:normal;color:var(--gold-deep);font-size:0.72em;}
+  .trust-label{font-size:12.5px;color:var(--slate-2);margin-top:4px;font-weight:600;}
+
+  /* ---------- 공통 섹션 헤더 ---------- */
+  section{padding:clamp(64px,8vw,96px) clamp(20px,5vw,64px);}
+  .sec-inner{max-width:1100px;margin:0 auto;}
+  .sec-eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12.5px;font-weight:800;letter-spacing:0.1em;color:var(--gold-deep);
+    margin-bottom:14px;
+  }
+  .sec-eyebrow::before{content:'';width:22px;height:2px;background:var(--gold-deep);}
+  .sec-title{
+    font-family:'Noto Serif KR',serif;font-weight:800;
+    font-size:clamp(24px,3.2vw,38px);line-height:1.4;color:var(--ink);margin-bottom:14px;
+  }
+  .sec-title em{font-style:normal;color:var(--gold-deep);}
+  .sec-sub{font-size:15px;line-height:1.8;color:var(--slate-2);margin-bottom:48px;max-width:640px;}
+  .center{text-align:center;} .center .sec-sub{margin-left:auto;margin-right:auto;}
+  .center .sec-eyebrow::before{display:none;}
+
+  /* ---------- PROBLEM ---------- */
+  .problem{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .problem-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px;}
+  .problem-card{
+    background:var(--cream);border:1px solid var(--line);border-radius:16px;
+    padding:30px 26px;transition:all .25s ease;
+  }
+  .problem-card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(22,35,63,0.07);}
+  .problem-q{font-size:12px;font-weight:800;color:var(--gold-deep);letter-spacing:0.06em;margin-bottom:12px;}
+  .problem-card h3{font-size:17.5px;font-weight:700;color:var(--ink);margin-bottom:10px;line-height:1.5;}
+  .problem-card p{font-size:13.5px;color:var(--slate-2);line-height:1.7;}
+
+  /* ---------- 건강검진 비유 ---------- */
+  .checkup{background:var(--ink);color:#fff;}
+  .checkup .sec-eyebrow{color:var(--gold-light);} .checkup .sec-eyebrow::before{background:var(--gold-light);}
+  .checkup .sec-title{color:#fff;} .checkup .sec-title em{color:var(--gold-light);}
+  .checkup .sec-sub{color:rgba(255,255,255,0.65);}
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:900px;margin:0 auto;}
+  @media(max-width:720px){.compare{grid-template-columns:1fr;}}
+  .compare-col{
+    background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);
+    border-radius:18px;padding:32px 28px;
+  }
+  .compare-col.highlight{background:rgba(181,137,74,0.12);border-color:rgba(217,184,124,0.45);}
+  .compare-head{display:flex;align-items:center;gap:10px;margin-bottom:22px;font-weight:800;font-size:17px;}
+  .compare-head .chip{
+    font-size:11px;font-weight:700;padding:4px 12px;border-radius:999px;
+    background:rgba(255,255,255,0.12);
+  }
+  .compare-col.highlight .chip{background:var(--gold-deep);color:#fff;}
+  .compare-row{
+    display:flex;gap:14px;padding:13px 0;border-top:1px solid rgba(255,255,255,0.08);
+    font-size:14px;line-height:1.6;
+  }
+  .compare-row .no{
+    flex-shrink:0;width:24px;height:24px;border-radius:50%;
+    background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;
+    font-size:12px;font-weight:800;
+  }
+  .compare-col.highlight .no{background:var(--gold-deep);}
+  .compare-row b{font-weight:700;}
+  .compare-row span{color:rgba(255,255,255,0.6);font-size:13px;display:block;}
+
+  /* ---------- PROCESS ---------- */
+  .process{background:var(--cream);}
+  .steps{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;}
+  @media(max-width:960px){.steps{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:560px){.steps{grid-template-columns:1fr;}}
+  .step{
+    background:var(--panel);border:1px solid var(--line);border-radius:16px;
+    padding:26px 20px;position:relative;transition:all .25s ease;
+  }
+  .step:hover{border-color:var(--gold);box-shadow:0 10px 26px rgba(143,107,54,0.12);transform:translateY(-4px);}
+  .step-no{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:36px;height:36px;border-radius:12px;
+    background:var(--gold-tint);color:var(--gold-deep);
+    font-weight:800;font-size:16px;margin-bottom:14px;
+  }
+  .step h3{font-size:15.5px;font-weight:800;color:var(--ink);margin-bottom:8px;line-height:1.45;}
+  .step p{font-size:12.8px;color:var(--slate-2);line-height:1.65;margin-bottom:14px;}
+  .step-tag{
+    display:inline-block;font-size:11px;font-weight:700;color:var(--gold-deep);
+    background:var(--gold-tint);padding:4px 10px;border-radius:999px;
+  }
+  .step-arrow{position:absolute;right:-14px;top:44%;font-size:16px;color:#D7D2C6;z-index:2;}
+  @media(max-width:960px){.step-arrow{display:none;}}
+  .sla-note{
+    margin-top:28px;padding:18px 24px;border-radius:14px;
+    background:var(--panel);border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;
+    font-size:13.5px;color:var(--slate);text-align:center;line-height:1.7;
+  }
+  .sla-note b{color:var(--gold-deep);}
+
+  /* ---------- 리포트 미리보기 ---------- */
+  .report{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .report-wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
+  @media(max-width:860px){.report-wrap{grid-template-columns:1fr;}}
+  .report-mock{
+    background:var(--cream);border:1px solid var(--line);border-radius:20px;
+    padding:30px;box-shadow:0 20px 48px rgba(22,35,63,0.08);
+  }
+  .rm-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;}
+  .rm-title{font-weight:800;font-size:15px;color:var(--ink);}
+  .rm-grade{font-family:'Noto Serif KR',serif;font-weight:800;font-size:30px;color:var(--gold-deep);}
+  .rm-bar{margin-bottom:16px;}
+  .rm-bar-label{display:flex;justify-content:space-between;font-size:12.5px;font-weight:600;color:var(--slate-2);margin-bottom:6px;}
+  .rm-bar-label b{color:var(--ink);}
+  .rm-track{height:8px;border-radius:4px;background:#EAE6DC;overflow:hidden;}
+  .rm-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--gold-light),var(--gold-deep));}
+  .rm-note{
+    margin-top:20px;padding:14px 16px;border-radius:12px;background:var(--gold-tint);
+    font-size:12.8px;line-height:1.6;color:var(--slate);border:1px solid rgba(143,107,54,0.2);
+  }
+  .rm-note b{color:var(--gold-deep);}
+  .report-points{display:flex;flex-direction:column;gap:18px;margin-top:8px;}
+  .rp-item{display:flex;gap:16px;}
+  .rp-icon{
+    flex-shrink:0;width:40px;height:40px;border-radius:12px;background:var(--gold-tint);
+    display:flex;align-items:center;justify-content:center;font-size:18px;
+  }
+  .rp-item h4{font-size:15.5px;font-weight:800;color:var(--ink);margin-bottom:4px;}
+  .rp-item p{font-size:13.5px;color:var(--slate-2);line-height:1.7;}
+
+  /* ---------- SERVICES (3-Track 개편) ---------- */
+  .services{background:var(--cream);}
+  .svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;}
+  .svc-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:16px;
+    padding:28px 24px;transition:all .25s ease;display:flex;flex-direction:column;
+  }
+  .svc-card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(22,35,63,0.08);}
+  .svc-num{font-size:12px;font-weight:800;color:var(--gold-deep);letter-spacing:0.08em;margin-bottom:14px;}
+  .svc-card h3{font-size:17px;font-weight:800;color:var(--ink);margin-bottom:8px;}
+  .svc-card p{font-size:13.5px;color:var(--slate-2);line-height:1.7;margin-bottom:18px;flex:1;}
+  .svc-link{font-size:13px;font-weight:700;color:var(--ink);border-bottom:1px solid var(--gold);padding-bottom:2px;}
+  .svc-link:hover{color:var(--gold-deep);}
+
+  /* ========== 솔루션 슬라이더 섹션 ========== */
+  .bs-section {
+    background: var(--cream);
+    padding: clamp(60px, 8vw, 88px) clamp(20px, 5vw, 64px);
+    border-bottom: 1px solid var(--line);
+  }
+  .bs-section:nth-of-type(even) {
+    background: var(--panel);
+  }
+  .bs-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    gap: 60px;
+  }
+  @media (max-width: 960px) {
+    .bs-inner { flex-direction: column; gap: 40px; }
+  }
+
+  /* 좌측 텍스트 영역 */
+  .bs-left {
+    flex: 0 0 340px;
+    position: sticky;
+    top: 100px;
+    word-break: keep-all; 
+  }
+  @media (max-width: 960px) {
+    .bs-left { flex: none; width: 100%; position: static; }
+  }
+  .bs-left h2 {
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 800;
+    font-size: clamp(28px, 3.2vw, 38px);
+    line-height: 1.4;
+    color: var(--ink);
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+  }
+  .bs-left h2 span { 
+    color: var(--gold-deep); 
+    display: block;
+  }
+  .bs-desc {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--slate-2);
+    margin-bottom: 36px;
+    word-break: keep-all;
+  }
+
+  /* 컨트롤 버튼 영역 */
+  .bs-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .bs-nav-btn {
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    width: 46px;
+    height: 46px;
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--slate);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+  .bs-nav-btn:hover {
+    border-color: var(--gold-deep);
+    color: var(--gold-deep);
+  }
+  .bs-nav-btn.active {
+    background: #8F6B36;
+    border-color: #8F6B36;
+    color: white;
+  }
+  .bs-counter {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--slate-2);
+    min-width: 40px;
+    text-align: center;
+  }
+  .bs-counter span { color: var(--ink); font-weight: 800; }
+  
+  /* 무료 상담 버튼 */
+  .bs-consult-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--ink);
+    color: white;
+    padding: 16px 40px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 15px;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+  .bs-consult-btn:hover {
+    background: var(--ink-2);
+    transform: translateY(-2px);
+  }
+
+  /* 우측 슬라이더 영역 */
+  .bs-right {
+    flex: 1;
+    min-width: 0;
+  }
+  .bs-track-container {
+    width: 100%;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 16px;
+  }
+  .bs-track-container::-webkit-scrollbar { display: none; }
+  .bs-track {
+    display: flex;
+    gap: 24px;
+  }
+
+  .bs-card {
+    flex-shrink: 0;
+    width: 320px;
+    height: auto;
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    transition: transform 0.3s ease;
+  }
+  .bs-card:hover { transform: translateY(-4px); }
+  .bs-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* ---------- FINAL CTA ---------- */
+  .final{background:linear-gradient(135deg,var(--ink) 0%, #1E2E52 100%);text-align:center;color:#fff;}
+  .final h2{
+    font-family:'Noto Serif KR',serif;font-weight:800;
+    font-size:clamp(26px,3.4vw,42px);line-height:1.4;margin-bottom:18px;
+  }
+  .final h2 em{font-style:normal;color:var(--gold-light);}
+  .final p{font-size:15px;line-height:1.8;color:rgba(255,255,255,0.7);margin-bottom:36px;}
+  .final-btn{
+    display:inline-block;background:#fff;color:var(--ink);
+    font-weight:800;font-size:16px;padding:18px 44px;border-radius:999px;
+    transition:all .2s ease;box-shadow:0 12px 32px rgba(0,0,0,0.25);
+  }
+  .final-btn:hover{background:var(--cream);transform:translateY(-2px);}
+  .final-sub{margin-top:16px;font-size:12.5px;color:rgba(255,255,255,0.5);}
+
+  /* ---------- FOOTER ---------- */
+  .footer{
+    background:#101828;color:rgba(255,255,255,0.55);
+    padding:36px clamp(20px,5vw,64px);font-size:12.5px;line-height:1.9;
+  }
+  .footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;}
+  .footer b{color:#fff;font-family:'Noto Serif KR',serif;font-size:15px;}
+  .footer .gold{color:var(--gold-light);font-weight:700;}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="brand">
+    <span class="brand-name">GRIFFIN</span>
+    <span class="brand-by">by FASTFIVE</span>
+  </div>
+  <a href="#signup-form" class="nav-cta">무료 진단 신청</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="dot"></span>국내 1위 오피스 브랜드 FASTFIVE가 운영합니다</div>
+    <h1 class="headline">비어있는 사무실,<br>혼자 고민하지 마세요.<br><em>FASTFIVE가 함께 해결합니다.</em></h1>
+    <p class="hero-desc">
+      건물주님의 가장 큰 고민은 결국 <b>공실</b>입니다.<br>
+      29,000개 기업이 선택한 FASTFIVE의 운영 노하우로<br>
+      내 건물의 상태를 진단하고, 해결 방법까지 제안해 드립니다.
+    </p>
+    <div class="lead-box">
+      <!-- '멤버십 가입'으로 워딩 수정 -->
+      <a href="#signup-form" class="lead-btn primary">10초 만에 멤버십 가입하기</a>
+      <a href="https://griffin.fastfive.co.kr/" class="lead-btn ghost">이미 회원이라면 로그인 →</a>
+    </div>
+    <!-- 캡션 유지 -->
+    <p class="lead-caption">이름과 연락처만으로 <b>간편하게 가입</b>하고, 상세 건물 데이터 입력 후 무료 헬스체크 리포트를 받아보세요.</p>
+    
+    <div class="trust-strip">
+      <div class="trust-item"><div class="trust-num">1<em>위</em></div><div class="trust-label">오피스 브랜드 인지도</div></div>
+      <div class="trust-item"><div class="trust-num">64<em>개</em></div><div class="trust-label">전국 직영 지점</div></div>
+      <div class="trust-item"><div class="trust-num">29,200<em>개</em></div><div class="trust-label">누적 고객사</div></div>
+      <div class="trust-item"><div class="trust-num">10<em>년+</em></div><div class="trust-label">건물 운영 경험</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem">
+  <div class="sec-inner center">
+    <div class="sec-eyebrow">건물주님, 혹시 이런 고민 있으신가요?</div>
+    <h2 class="sec-title">문제는 알겠는데,<br><em>어디서부터 손대야 할지</em> 막막합니다</h2>
+    <p class="sec-sub">대부분의 건물주님이 같은 고민을 하고 계십니다. 원인을 모르면 해결도 어렵습니다.</p>
+    <div class="problem-grid" style="text-align:left;">
+      <div class="problem-card">
+        <div class="problem-q">고민 1</div>
+        <h3>"공실이 몇 달째<br>안 나가요"</h3>
+        <p>임대료를 내려야 할지, 용도를 바꿔야 할지, 광고를 더 해야 할지 판단할 기준이 없습니다.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-q">고민 2</div>
+        <h3>"우리 건물이 시세 대비<br>어떤 수준인지 모르겠어요"</h3>
+        <p>주변 건물과 비교해 임대료·공실률·시설 수준이 어느 정도인지 객관적으로 확인하기 어렵습니다.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-q">고민 3</div>
+        <h3>"관리는 하고 있는데<br>가치가 오르는 건지 모르겠어요"</h3>
+        <p>세입자 관리, 시설 보수는 하고 있지만 건물의 자산가치가 제대로 지켜지고 있는지 확신이 없습니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 건강검진 비유 -->
+<section class="checkup">
+  <div class="sec-inner center">
+    <div class="sec-eyebrow">GRIFFIN의 접근 방식</div>
+    <h2 class="sec-title">사람이 건강검진을 받듯,<br>건물도 <em>정기 진단</em>이 필요합니다</h2>
+    <p class="sec-sub">키·몸무게·혈액검사 없이 처방이 없듯이, 건물도 기본 정보를 알아야 정확한 해결책이 나옵니다.</p>
+    <div class="compare" style="text-align:left;">
+      <div class="compare-col">
+        <div class="compare-head">🩺 사람의 건강검진 <span class="chip">일반 검진</span></div>
+        <div class="compare-row"><span class="no">1</span><div><b>기본 측정</b><span>키, 몸무게, 혈압을 잰다</span></div></div>
+        <div class="compare-row"><span class="no">2</span><div><b>정밀 검사</b><span>혈액검사, 영상 촬영을 한다</span></div></div>
+        <div class="compare-row"><span class="no">3</span><div><b>결과 상담</b><span>의사가 결과를 설명한다</span></div></div>
+        <div class="compare-row"><span class="no">4</span><div><b>치료·관리</b><span>필요한 진료과에서 치료받는다</span></div></div>
+      </div>
+      <div class="compare-col highlight">
+        <div class="compare-head">🏢 건물의 GRIFFIN 진단 <span class="chip">무료</span></div>
+        <div class="compare-row"><span class="no">1</span><div><b>멤버십 가입</b><span>이름과 연락처로 간편하게 가입한다</span></div></div>
+        <div class="compare-row"><span class="no">2</span><div><b>상세 정보 등록</b><span>헬스체크를 위해 주소, 공실현황 등을 입력한다</span></div></div>
+        <div class="compare-row"><span class="no">3</span><div><b>건물 정밀 진단</b><span>공실·임대료·시설을 시장과 비교 분석한다</span></div></div>
+        <div class="compare-row"><span class="no">4</span><div><b>결과 상담 & 해결</b><span>전문가 상담을 통해 맞춤 해결책을 실행한다</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process">
+  <div class="sec-inner">
+    <div class="sec-eyebrow">진행 과정</div>
+    <h2 class="sec-title">신청부터 해결까지, <em>5단계</em>면 충분합니다</h2>
+    <p class="sec-sub">빠른 자동 응답 대신, 단계마다 담당 조직과 처리 기한을 정해두고 FASTFIVE 실무 전문가가 직접 검토합니다. 진단 결과 확인까지 비용은 들지 않습니다.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-no">1</div>
+        <h3>멤버십 가입</h3>
+        <p>이름, 연락처 등 최소 정보만으로 쉽고 빠르게 가입합니다.</p>
+        <span class="step-tag">시스템 자동화 / 즉시</span>
+        <span class="step-arrow">▶</span>
+      </div>
+      <div class="step">
+        <div class="step-no">2</div>
+        <h3>헬스체크 신청</h3>
+        <p>무료 진단 혜택을 위해 건물의 상세 스펙을 자발적으로 입력합니다.</p>
+        <span class="step-tag">추가 정보 입력 유도</span>
+        <span class="step-arrow">▶</span>
+      </div>
+      <div class="step">
+        <div class="step-no">3</div>
+        <h3>건물 정밀 진단</h3>
+        <p>입력된 데이터를 바탕으로 주변 시장 데이터와 비교 분석합니다.</p>
+        <span class="step-tag">TF전담팀 / 14일 이내</span>
+        <span class="step-arrow">▶</span>
+      </div>
+      <div class="step">
+        <div class="step-no">4</div>
+        <h3>전문가 1:1 상담</h3>
+        <p>도출된 진단 리포트를 기반으로 실무 전문가가 심층 상담합니다.</p>
+        <span class="step-tag">사업부 / 7~10일 이내</span>
+        <span class="step-arrow">▶</span>
+      </div>
+      <div class="step">
+        <div class="step-no">5</div>
+        <h3>가치 확대 연계</h3>
+        <p>입점, 시설 관리, 리모델링 등 맞춤 서비스를 연계하여 실행합니다.</p>
+        <span class="step-tag">사업부 / 10일 이후</span>
+      </div>
+    </div>
+    <div class="sla-note">
+      모든 진단과 상담은 AI 자동 응답이 아닌 <b>FASTFIVE 실무 전문가의 검토</b>를 거칩니다 —
+      헬스체크 접수 후 담당자 배정 <b>72시간 이내</b> · 전문가 진단 <b>14일 이내</b>
+    </div>
+  </div>
+</section>
+
+<!-- 리포트 미리보기 -->
+<section class="report">
+  <div class="sec-inner">
+    <div class="report-wrap">
+      <div>
+        <div class="sec-eyebrow">진단 리포트</div>
+        <h2 class="sec-title">내 건물의 상태를<br><em>한 장의 리포트</em>로 확인하세요</h2>
+        <div class="report-points">
+          <div class="rp-item">
+            <div class="rp-icon">📊</div>
+            <div><h4>시장 비교 분석</h4><p>같은 지역·같은 규모 건물과 비교한 우리 건물의 위치를 보여드립니다.</p></div>
+          </div>
+          <div class="rp-item">
+            <div class="rp-icon">🔍</div>
+            <div><h4>원인 진단</h4><p>공실이 길어지는 이유가 임대료인지, 시설인지, 마케팅인지 짚어드립니다.</p></div>
+          </div>
+          <div class="rp-item">
+            <div class="rp-icon">💡</div>
+            <div><h4>해결 방향 제시</h4><p>진단 결과에 따라 지금 무엇부터 하면 되는지 우선순위를 제안합니다.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="report-mock">
+        <div class="rm-head">
+          <span class="rm-title">○○빌딩 건물 진단 리포트</span>
+          <span class="rm-grade">B+</span>
+        </div>
+        <div class="rm-bar">
+          <div class="rm-bar-label"><span>임대 경쟁력</span><b>양호</b></div>
+          <div class="rm-track"><div class="rm-fill" style="width:72%"></div></div>
+        </div>
+        <div class="rm-bar">
+          <div class="rm-bar-label"><span>공실 위험도</span><b>주의</b></div>
+          <div class="rm-track"><div class="rm-fill" style="width:48%"></div></div>
+        </div>
+        <div class="rm-bar">
+          <div class="rm-bar-label"><span>시설 상태</span><b>양호</b></div>
+          <div class="rm-track"><div class="rm-fill" style="width:65%"></div></div>
+        </div>
+        <div class="rm-bar">
+          <div class="rm-bar-label"><span>자산가치 유지력</span><b>보통</b></div>
+          <div class="rm-track"><div class="rm-fill" style="width:56%"></div></div>
+        </div>
+        <div class="rm-note"><b>진단 요약</b> — 3층 공실은 임대료보다 시설 노후가 원인일 가능성이 높습니다. 부분 리모델링 후 재임대 시 임대료 상향 여지가 있습니다.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES (3-Track 개편) -->
+<section class="services">
+  <div class="sec-inner center">
+    <div class="sec-eyebrow">진단 이후, FASTFIVE가 해결합니다</div>
+    <h2 class="sec-title">진단에서 끝나지 않습니다.<br><em>핵심 실무 부서</em>가 직접 실행합니다</h2>
+    <p class="sec-sub">상담 결과에 따라 건물의 상황에 가장 알맞은 전문 부서(3-Track)가 배정되어 실질적인 해결책을 제시합니다.</p>
+    <div class="svc-grid" style="text-align:left;">
+      <!-- Track 1 (GRIFFIN 최우선 배치) -->
+      <div class="svc-card">
+        <div class="svc-num">TRACK 01</div>
+        <h3>공실/시스템 문의 (GRIFFIN)</h3>
+        <p>공실 장기화 고민 해결을 돕고, 관리 시스템(그리핀) 도입 및 온보딩 등 일반적인 건물 관리를 최우선으로 지원합니다.</p>
+        <a class="svc-link" href="https://griffin.fastfive.co.kr/">GRIFFIN 살펴보기 →</a>
+      </div>
+      <!-- Track 2 (VC) -->
+      <div class="svc-card">
+        <div class="svc-num">TRACK 02</div>
+        <h3>개발 문의 (VC 파트)</h3>
+        <p>신축, 리모델링, 밸류애드 등 건물의 내재 가치를 끌어올리기 위한 전문적인 기획 및 개발 상담을 제공합니다.</p>
+        <a class="svc-link" href="https://buildingsolution.co.kr/contact">개발 상담 →</a>
+      </div>
+      <!-- Track 3 (PM) -->
+      <div class="svc-card">
+        <div class="svc-num">TRACK 03</div>
+        <h3>PM / FM 문의 (PM 파트)</h3>
+        <p>임대차 관리부터 건물 자산 관리, 시설 유지보수까지 건물 운영 전반을 체계적이고 투명하게 대행합니다.</p>
+        <a class="svc-link" href="https://buildingsolution.co.kr/contact">운영 상담 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GRIFFIN 솔루션 (가장 먼저 노출) -->
+<section id="section-vacancy" class="bs-section">
+  <div class="bs-inner">
+    <div class="bs-left">
+      <h2>공실 해소 및 시스템 솔루션은<br>빈틈없는 전략으로<br><span>수익을 안정화합니다</span></h2>
+      <p class="bs-desc">우량 임차인 유치와 체계적인 데이터 관리로<br>안정적인 수익 창출을 책임집니다.</p>
+      <div class="bs-controls">
+        <button class="bs-nav-btn" onclick="moveSlider('vacancy', -1)">&#8592;</button>
+        <div class="bs-counter"><span id="counter-vacancy">1</span> / 6</div>
+        <button class="bs-nav-btn active" onclick="moveSlider('vacancy', 1)">&#8594;</button>
+      </div>
+      <a href="https://griffin.fastfive.co.kr/" class="bs-consult-btn">GRIFFIN 도입 문의</a>
+    </div>
+    <div class="bs-right">
+      <div class="bs-track-container" id="track-vacancy" onscroll="updateCounter('vacancy')">
+        <div class="bs-track">
+          <div class="bs-card"><img src="공실관리1.png" alt="공실관리 1"></div>
+          <div class="bs-card"><img src="공실관리2.png" alt="공실관리 2"></div>
+          <div class="bs-card"><img src="공실관리3.png" alt="공실관리 3"></div>
+          <div class="bs-card"><img src="공실관리1.png" alt="공실관리 4"></div>
+          <div class="bs-card"><img src="공실관리2.png" alt="공실관리 5"></div>
+          <div class="bs-card"><img src="공실관리3.png" alt="공실관리 6"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 개발(VC) 솔루션 -->
+<section id="section-dev" class="bs-section">
+  <div class="bs-inner">
+    <div class="bs-left">
+      <h2>리모델링·개발 솔루션은<br>허울 좋은 말이 아닌<br><span>수치로 증명합니다</span></h2>
+      <p class="bs-desc">최적의 가치 극대화 전략으로<br>부동산 가치를 새롭게 디자인합니다.</p>
+      <div class="bs-controls">
+        <button class="bs-nav-btn" onclick="moveSlider('dev', -1)">&#8592;</button>
+        <div class="bs-counter"><span id="counter-dev">1</span> / 6</div>
+        <button class="bs-nav-btn active" onclick="moveSlider('dev', 1)">&#8594;</button>
+      </div>
+      <a href="https://buildingsolution.co.kr/contact" class="bs-consult-btn">무료 상담</a>
+    </div>
+    <div class="bs-right">
+      <div class="bs-track-container" id="track-dev" onscroll="updateCounter('dev')">
+        <div class="bs-track">
+          <div class="bs-card"><img src="신축개발1.png" alt="신축개발 1"></div>
+          <div class="bs-card"><img src="신축개발2.png" alt="신축개발 2"></div>
+          <div class="bs-card"><img src="신축개발3.png" alt="신축개발 3"></div>
+          <div class="bs-card"><img src="신축개발1.png" alt="신축개발 4"></div>
+          <div class="bs-card"><img src="신축개발2.png" alt="신축개발 5"></div>
+          <div class="bs-card"><img src="신축개발3.png" alt="신축개발 6"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PM/FM 솔루션 -->
+<section id="section-asset" class="bs-section">
+  <div class="bs-inner">
+    <div class="bs-left">
+      <h2>건물 자산·운영 솔루션은<br>체계적인 관리로<br><span>수명을 늘립니다</span></h2>
+      <p class="bs-desc">전문적인 PM/FM 대행을 통해<br>건물 자산의 가치를 온전히 보존합니다.</p>
+      <div class="bs-controls">
+        <button class="bs-nav-btn" onclick="moveSlider('asset', -1)">&#8592;</button>
+        <div class="bs-counter"><span id="counter-asset">1</span> / 6</div>
+        <button class="bs-nav-btn active" onclick="moveSlider('asset', 1)">&#8594;</button>
+      </div>
+      <a href="https://buildingsolution.co.kr/contact" class="bs-consult-btn">무료 상담</a>
+    </div>
+    <div class="bs-right">
+      <div class="bs-track-container" id="track-asset" onscroll="updateCounter('asset')">
+        <div class="bs-track">
+          <div class="bs-card"><img src="자산관리1.png" alt="자산관리 1"></div>
+          <div class="bs-card"><img src="자산관리2.png" alt="자산관리 2"></div>
+          <div class="bs-card"><img src="자산관리3.png" alt="자산관리 3"></div>
+          <div class="bs-card"><img src="자산관리1.png" alt="자산관리 4"></div>
+          <div class="bs-card"><img src="자산관리2.png" alt="자산관리 5"></div>
+          <div class="bs-card"><img src="자산관리3.png" alt="자산관리 6"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final">
+  <div class="sec-inner">
+    <h2>내 건물의 건강 상태,<br><em>오늘 무료로</em> 확인해 보세요</h2>
+    <p>진단은 무료이며, 모든 결과는 실무 전문가의 검토를 거쳐 정해진 기한 안에 전달됩니다.<br>FASTFIVE의 10년 운영 노하우가 건물주님의 편에 섭니다.</p>
+    <!-- '멤버십 가입'으로 워딩 수정 -->
+    <a href="#signup-form" class="final-btn">10초 만에 멤버십 가입하고 무료 진단받기</a>
+    <!-- 서브 카피 유지 -->
+    <p class="final-sub">복잡한 절차 없이 이름과 연락처만으로 시작하세요 · 상세 진단 혜택은 가입 후 제공됩니다</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <b>GRIFFIN</b> <span class="gold">by FASTFIVE</span><br>
+      국내 1위 오피스 브랜드 FASTFIVE의 건물 자산관리 플랫폼
+    </div>
+    <div>
+      패스트파이브(주) · 서울특별시 서초구 남부순환로333길 10<br>
+      부동산 문의 realestategroup@fastfive.co.kr · 전화 1833-5550
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ========== 슬라이더 기능 ==========
+  const sliderStates = {
+    'vacancy': { current: 1, total: 6 },
+    'dev': { current: 1, total: 6 },
+    'asset': { current: 1, total: 6 }
+  };
+  const cardWidth = 344; // 카드 너비(320) + 간격(24)
+
+  window.moveSlider = function(id, direction) {
+    let state = sliderStates[id];
+    let newIndex = state.current + direction;
+    if (newIndex < 1) newIndex = 1;
+    if (newIndex > state.total) newIndex = state.total;
+    state.current = newIndex;
+    
+    const counterElement = document.getElementById('counter-' + id);
+    if(counterElement) {
+      counterElement.innerHTML = `<span>${state.current}</span> / ${state.total}`;
+    }
+
+    let track = document.getElementById('track-' + id);
+    let scrollAmount = (state.current - 1) * cardWidth;
+    track.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+  };
+
+  window.updateCounter = function(id) {
+    let track = document.getElementById('track-' + id);
+    let state = sliderStates[id];
+    let scrolledIndex = Math.round(track.scrollLeft / cardWidth) + 1;
+    if(scrolledIndex < 1) scrolledIndex = 1;
+    if(scrolledIndex > state.total) scrolledIndex = state.total;
+    
+    if(scrolledIndex !== state.current) {
+      state.current = scrolledIndex;
+      const counterElement = document.getElementById('counter-' + id);
+      if(counterElement) {
+        counterElement.innerHTML = `<span>${state.current}</span> / ${state.total}`;
+      }
+    }
+  };
+</script>
+
+</body>
+</html>
